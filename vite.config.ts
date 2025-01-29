@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: "/MatrixTable/",
   build: {
-    outDir: "build",
+    outDir: "dist",
   },
 });
