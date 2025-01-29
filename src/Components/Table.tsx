@@ -10,7 +10,7 @@ import {
 } from "../Utils/generateMatrix";
 
 export const Table: React.FC = () => {
-  const { matrix, setMatrix } = useMatrix();
+  const { matrix, setMatrix } = useMatrix(); // Assuming useMatrix provides correct typing for matrix and setMatrix
   const [hoveredCell, setHoveredCell] = useState<Cell | null>(null);
   const [highlightedCells, setHighlightedCells] = useState<Set<CellId>>(
     new Set()
@@ -18,37 +18,29 @@ export const Table: React.FC = () => {
   const X = 5;
 
   const addRow = () => {
-    setMatrix((prev: any) => {
+    setMatrix((prev: Cell[][]) => {
       const newRow = generateMatrix(1, prev.length > 0 ? prev[0].length : 5)[0];
-
       const updatedRow = newRow.map((cell, index) => ({
         ...cell,
-        id: `${Date.now()}-${index}`,
+        id: Date.now() + index, // Make sure the id is a number
       }));
-
-      if (prev.length === 0) {
-        return [[...updatedRow]];
-      }
-
-      return [...prev, updatedRow];
+      return prev.length === 0 ? [[...updatedRow]] : [...prev, updatedRow];
     });
   };
 
   const deleteRow = (index: number) => {
-    setMatrix((prev) => {
+    setMatrix((prev: Cell[][]) => {
       const newMatrix = prev.filter((_, i) => i !== index);
-
       if (newMatrix.length === 0) {
         setHoveredCell(null);
         setHighlightedCells(new Set());
       }
-
       return newMatrix;
     });
   };
 
   const updateCell = (rowIndex: number, colIndex: number) => {
-    setMatrix((prev) => {
+    setMatrix((prev: Cell[][]) => {
       const newMatrix = [...prev];
       newMatrix[rowIndex][colIndex] = {
         ...newMatrix[rowIndex][colIndex],
@@ -79,11 +71,12 @@ export const Table: React.FC = () => {
       <table>
         <thead>
           <tr>
-            {matrix[0]?.map((_, colIndex) => (
-              <th key={colIndex} className={style.textStyleForHead}>
-                Col {colIndex + 1}
-              </th>
-            ))}
+            {matrix.length > 0 &&
+              matrix[0].map((_, colIndex) => (
+                <th key={colIndex} className={style.textStyleForHead}>
+                  Col {colIndex + 1}
+                </th>
+              ))}
             {matrix[0] && <th className={style.textStyleForHead}>Sum</th>}
           </tr>
         </thead>
@@ -105,9 +98,7 @@ export const Table: React.FC = () => {
                       onClick={() => updateCell(rowIndex, colIndex)}
                       onMouseEnter={() => setHoveredCell(cell)}
                       onMouseLeave={() => setHoveredCell(null)}
-                      style={{
-                        backgroundColor,
-                      }}
+                      style={{ backgroundColor }}
                       className={style.stylesForX}
                     >
                       {hoveredCell?.id === cell.id
