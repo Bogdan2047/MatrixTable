@@ -18,7 +18,7 @@ export const Table: React.FC = () => {
   const X = 5;
 
   const addRow = () => {
-    setMatrix((prev) => {
+    setMatrix((prev: any) => {
       const newRow = generateMatrix(1, prev.length > 0 ? prev[0].length : 5)[0];
 
       const updatedRow = newRow.map((cell, index) => ({
