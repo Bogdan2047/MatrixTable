@@ -1,0 +1,33 @@
+.appContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.textStyleForHead {
+  font-size: 1.7vw;
+}
+
+.stylesForX {
+  cursor: pointer;
+  width: 5vw;
+  text-align: center;
+  font-size: 1.5vw;
+}
+
+.styleForSumm {
+  text-align: center;
+  font-size: 1.5vw;
+}
+
+.styleForButton {
+  width: 8vw;
+  height: 5vw;
+  font-size: 1vw;
+}
+
+.stylesForProcent {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5vw;
+}
